@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<div th:fragment="header" class="button-container">
+    <!-- 왼쪽 -->
+    <div class="left-buttons">
+
+    </div>
+    <!-- 오른쪽 -->
+    <div id="topButtons" class="right-buttons">
+        <!-- 로그아웃 상태 -->
+        <th:block th:unless="${isLoggedIn}">
+            <a th:href="@{/member/join}" class="custom-link">회원 가입</a>
+            <button onclick="location.href='/member/login'">로그인</button>
+        </th:block>
+
+        <!-- 로그인 상태 -->
+        <th:block th:if="${isLoggedIn}">
+            <button onclick="location.href='/member/logout'">로그아웃</button>
+        </th:block>
+    </div>
+</div>

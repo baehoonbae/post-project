@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/commentStyle.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <title>게시판</title>
+</head>
+<body>
+<div th:replace="~{form/headerButtons :: header}"></div>
+<div>
+    <br/>
+    <nav>훈 배</nav>
+    <div>
+        <div align="center">
+            <form id="contentForm" th:action="@{/post/{id}(id=${post.id})}" th:method="get">
+                <div class="form-group" align="left">
+                    <div style="font-weight: bold;" th:text="${post.title}"></div>
+                    <br/>
+                    <div class="post-header"
+                         style="display: flex; align-items: center; border-bottom: 1px solid #d3d3d3; padding-bottom: 8px;">
+                        <span class="post-nickname" style="border-right: 1px solid #d3d3d3; padding-right: 10px;"
+                              th:text="${post.nickname}"></span>
+                        <span class="post-updateDate" style="padding-left: 10px;" th:text="${post.updateDate}"></span>
+                    </div>
+                    <br/><br/>
+                    <label for="content"></label>
+                    <br/><br/>
+                    <div id="content" name="content" th:utext="${post.content}"></div>
+                    <br/><br/><br/><br/>
+                    <div style="font-weight: bold; white-space: nowrap; border-bottom: 2px solid teal; padding-bottom: 7px; margin-bottom: -15px;">
+                        <span th:text="'전체 댓글 '"></span>
+                        <span style="color: #D12121;" th:text="${post.eachComments}"></span>
+                        <span th:text="'개'"></span>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div th:replace="~{form/commentForm}"></div>
+        <div align="center">
+            <div class="button-container">
+                <div class="left-buttons">
+                    <button id="homeButton">전체 글</button>
+                </div>
+                <div class="right-buttons">
+                    <button id="updateButton">수정</button>
+                    <button id="deleteButton">삭제</button>
+                    <button id="writeButton">글 쓰기</button>
+                </div>
+            </div>
+        </div>
+        <div th:unless="${post}">
+            <p>게시물을 찾을 수 없습니다.</p>
+        </div>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script th:inline="javascript">
+        var isLoggedIn = [[${isLoggedIn}]];
+        var postId = [[${post.id}]];
+        var sessionNickname = [[${session.nickname}]];
+        var postNickname = [[${post.nickname}]];
+    </script>
+
+    <script src="/js/contentPageFunc.js"></script>
+    <script src="/js/commentFunc.js"></script>
+</body>
+</html>

@@ -1,0 +1,48 @@
+.comment {
+    text-align: left;
+}
+
+.comment-nickname {
+    font-weight: bold;
+    color: #000000; /* Black */
+}
+
+.comment-updateDate {
+    font-size: 0.9em;
+    color: #808080; /* Gray */
+}
+
+.comment-content {
+    margin-top: 5px;
+}
+
+.comment-header,
+.comment-content {
+    text-align: left;
+}
+
+.comment-button {
+    font-size: 0.8em !important;
+    background-color: #FFFFFF !important;
+    color: #000000 !important;
+    margin-left: 10px !important;
+    padding: 5px !important;
+    border: 1px solid #000000 !important;
+    border-radius: 5px !important;
+    cursor: pointer !important;
+}
+
+.comment-header {
+    align-items: flex-end;
+}
+
+.comment-header,
+.comment-header .button-container {
+    align-items: center;
+}
+
+#commentForm .form-group {
+    background-color: #f2f2f2;
+}
+
+.re
