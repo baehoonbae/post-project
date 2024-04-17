@@ -33,5 +33,5 @@ hs_err_pid*
 build/
 
 # Ignore application properties with sensitive info
-src/main/resources/application-prod.properties
-
+src/main/resources/application.properties
+src/main/resources/application.yml
