@@ -5,8 +5,9 @@
     <div align="center">
         <form th:id="'replyForm-' + ${comment.id}"
               th:action="@{/post/{id}/comment/{commentId}(id=${post.id}, commentId=${comment.id})}" th:method="post"
-              style="display: none;">
-            <div class="form-group" align="left" style="display: flex; justify-content: space-between;">
+              style="display: none; background-color: #f2f2f2;">
+            <div class="form-group" align="left"
+                 style="display: flex; justify-content: space-between; max-width: 100%;">
                 <th:block th:if="${session.isLoggedIn}">
                     <div style="display: flex; justify-content: center; align-items: center; width: 200px; height: 65px;">
                         <div id="nickname" name="nickname" style="font-weight: bold;"
@@ -14,15 +15,16 @@
                     </div>
                     <label for="replyContent"></label>
                     <textarea id="replyContent" name="replyContent" rows="3"
-                              style="flex-grow: 1; margin-left: 10px; margin-right: 10px; height: 65px;"></textarea>
+                              style="flex-grow: 1; margin-left: 10px; margin-right: 10px; height: 65px; max-width: 100%;"></textarea>
                     <button type="submit" style="width: 90px; height:65px; white-space: nowrap;">등록</button>
                 </th:block>
                 <th:block th:unless="${session.isLoggedIn}">
-                        <textarea class="replyContent" name="replyContent" rows="3"
-                                  style="flex-grow: 1; margin-left: 10px; margin-right: 10px; height: 65px;"></textarea>
+                    <textarea class="replyContent" name="replyContent" rows="3"
+                              style="flex-grow: 1; margin-left: 10px; margin-right: 10px; height: 65px; max-width: 100%;"></textarea>
                     <button type="submit" style="width: 90px; height:65px; white-space: nowrap;">등록</button>
                 </th:block>
             </div>
+            <hr/>
         </form>
     </div>
 
@@ -45,8 +47,8 @@
                 </div>
             </div>
             <div class="reply-content" style="padding-top: 16px;" th:text="${reply.content}"></div>
+            <hr/>
         </div>
-        <hr/>
     </div>
 
 </div>
