@@ -35,7 +35,7 @@ public class CommentController {
                                 HttpSession session) {
         // 로그인 되어 있는지, 댓글 작성자인지 체크
         String nickname = (String) session.getAttribute("nickname");
-        if (nickname == null || !commentService.findByCommentId(commentId).get().getNickname().equals(nickname)) {
+        if (nickname == null || !commentService.checkNickname(commentId, nickname)) {
             throw new IllegalStateException("권한이 없습니다.");
         }
 
@@ -44,7 +44,23 @@ public class CommentController {
     }
 
     // 답글 생성
+    @PostMapping(value = "/post/{id}/comment/{commentId}/reply")
+    public String addReply(@PathVariable Long id,
+                           @PathVariable Long commentId,
+                           @RequestParam String replyContent,
+                           HttpSession session) {
+        // 로그인 되어 있는지 체크
+        String nickname = (String) session.getAttribute("nickname");
+        if (nickname == null) {
+            throw new IllegalStateException("권한이 없습니다.");
+        }
 
+        commentService.createReply(id, commentId, replyContent, nickname);
+        return "redirect:/post/{id}";
+    }
 
     // 답글 삭제
+    //@PostMapping(value = "/post/{id}/comment/{commentId}/reply/{replyId}")
+
+
 }

@@ -4,7 +4,8 @@
     <!-- 답글 입력 창 -->
     <div align="center">
         <form th:id="'replyForm-' + ${comment.id}"
-              th:action="@{/post/{id}/comment/{commentId}(id=${post.id}, commentId=${comment.id})}" th:method="post"
+              th:action="@{/post/{id}/comment/{commentId}/reply(id=${post.id}, commentId=${comment.id})}"
+              th:method="post"
               style="display: none; background-color: #f2f2f2;">
             <div class="form-group" align="left"
                  style="display: flex; justify-content: space-between; max-width: 100%;">
@@ -29,9 +30,10 @@
     </div>
 
     <!-- 답글 목록 -->
-    <div class="reply-container">
+    <div class="reply-container" style="background-color: #f2f2f2;">
         <div th:each="reply : ${comment.replies}">
             <div class="reply-header" style="display: flex; justify-content: space-between; align-items: center;">
+                <img src="/images/829.png" alt="Reply Icon" style="width: 20px; height: 20px; margin-right: 5px;">
                 <div class="button-container">
                     <div class="left-buttons">
                         <span class="reply-nickname" style="padding-right: 7px;"
@@ -46,9 +48,10 @@
                     </div>
                 </div>
             </div>
-            <div class="reply-content" style="padding-top: 16px;" th:text="${reply.content}"></div>
-            <hr/>
+            <div class="reply-content" th:text="${reply.content}"></div>
         </div>
     </div>
 
 </div>
+
+</html>

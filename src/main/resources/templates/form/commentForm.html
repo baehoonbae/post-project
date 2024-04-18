@@ -3,7 +3,7 @@
 <div>
     <!-- 댓글 목록 -->
     <div class="form-group">
-        <div th:each="comment : ${post.comments}">
+        <div th:each="comment : ${post.comments}" th:if="${comment.parentComment == null}">
             <div class="comment-header" style="display: flex; justify-content: space-between; align-items: center;">
                 <div class="button-container">
                     <div class="left-buttons">
@@ -15,7 +15,8 @@
                     <div class="right-buttons">
                         <button th:id="'replyButton-' + ${comment.id}" class="comment-button reply">답글</button>
                         <button th:id="'deleteButton-' + ${comment.id}" class="comment-button delete"
-                                th:if="${comment.nickname == session.nickname}">삭제
+                                th:if="${comment.nickname == session.nickname}"
+                                onclick="return confirm('정말 삭제하시겠습니까?');">삭제
                         </button>
                     </div>
                 </div>

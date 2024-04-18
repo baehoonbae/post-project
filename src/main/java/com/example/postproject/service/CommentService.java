@@ -40,13 +40,14 @@ public class CommentService {
         if (optionalPost.isPresent()) {
             Post post = optionalPost.get();
             comment.setPost(post);
-            commentRepository.save(comment);
+            post.getComments().add(comment);
 
             // Post의 eachComments 값을 1 증가
             post.setEachComments(post.getEachComments() + 1);
             postRepository.save(post);
+            commentRepository.save(comment);
         } else {
-            throw new IllegalArgumentException("Post does not exist. PostId: " + postId);
+            throw new IllegalArgumentException("해당 게시글이 존재하지 않습니다.");
         }
     }
 
@@ -54,7 +55,7 @@ public class CommentService {
     @Transactional
     public ResponseEntity<String> deleteComment(long commentId) {
         // 해당 댓글 찾기
-        Optional<Comment> optionalComment = findByCommentId(commentId);
+        Optional<Comment> optionalComment = commentRepository.findById(commentId);
 
         if (optionalComment.isPresent()) {
             // 해당 게시글에서 댓글 삭제, 댓글 개수 1 감소
@@ -67,21 +68,45 @@ public class CommentService {
             postRepository.save(post);
             commentRepository.delete(optionalComment.get());
 
-            return ResponseEntity.ok("Post deleted successfully");
+            return ResponseEntity.ok("성공적으로 삭제되었습니다.");
         } else {
-            return new ResponseEntity<>("Post not found", HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>("해당 게시글이 존재하지 않습니다.", HttpStatus.NOT_FOUND);
         }
 
     }
 
-    // 특정 댓글 찾기
-    public Optional<Comment> findByCommentId(long commentId) {
+    // 답글 생성
+    @Transactional
+    public void createReply(Long postId, Long commentId, String replyContent, String nickname) {
+        // 새로운 답글 객체 생성 후, 내용/닉네임/작성 날짜 설정
+        Comment reply = new Comment();
         Optional<Comment> optionalComment = commentRepository.findById(commentId);
-        if (optionalComment.isPresent()) {
-            return optionalComment;
-        } else {
-            throw new IllegalArgumentException("해당 댓글이 존재하지 않습니다.");
-        }
+        Optional<Post> optionalPost = postRepository.findById(postId);
+
+        if(!optionalPost.isPresent()) throw new IllegalArgumentException("해당 게시글이 존재하지 않습니다.");
+        if(!optionalComment.isPresent()) throw new IllegalArgumentException("해당 댓글이 존재하지 않습니다.");
+
+        reply.setContent(replyContent);
+        reply.setNickname(nickname);
+        reply.setUpdateDate(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
+        reply.setPost(optionalPost.get());
+        reply.setParentComment(optionalComment.get());
+
+        Post post=optionalPost.get();
+        post.setEachComments(post.getEachComments() + 1);
+        postRepository.save(post);
+        commentRepository.save(reply);
     }
 
+    // 댓글 및 답글 존재 및 닉네임 일치 체크
+    public boolean checkNickname(long commentId, String nickname) {
+        Optional<Comment> optionalComment = commentRepository.findById(commentId);
+        return optionalComment.isPresent() && optionalComment.get().getNickname().equals(nickname);
+    }
+
+    // 댓글 및 답글 존재 체크
+    public boolean checkComment(long commentId) {
+        Optional<Comment> optionalComment = commentRepository.findById(commentId);
+        return optionalComment.isPresent();
+    }
 }
