@@ -58,21 +58,27 @@ public class CommentService {
         Optional<Comment> optionalComment = commentRepository.findById(commentId);
 
         if (optionalComment.isPresent()) {
-            // 해당 게시글에서 댓글 삭제, 댓글 개수 1 감소
-            Post post = optionalComment.get().getPost();
-            int eachComments = post.getEachComments();
-            post.setEachComments(eachComments - 1);
-            post.getComments().remove(optionalComment.get());
+            Comment comment = optionalComment.get();
+            Post post = comment.getPost();
+
+            comment.getReplies().forEach(reply -> {
+                post.setEachComments(post.getEachComments() - 1);
+                post.getComments().remove(reply);
+                commentRepository.delete(reply);
+            });
+
+            // 해당 게시글에서 댓글 삭제, 댓글 개수 감소
+            post.setEachComments(post.getEachComments() - 1);
+            post.getComments().remove(comment);
 
             // 게시글 저장, 댓글 삭제
             postRepository.save(post);
-            commentRepository.delete(optionalComment.get());
+            commentRepository.delete(comment);
 
             return ResponseEntity.ok("성공적으로 삭제되었습니다.");
         } else {
             return new ResponseEntity<>("해당 게시글이 존재하지 않습니다.", HttpStatus.NOT_FOUND);
         }
-
     }
 
     // 답글 생성
@@ -83,8 +89,8 @@ public class CommentService {
         Optional<Comment> optionalComment = commentRepository.findById(commentId);
         Optional<Post> optionalPost = postRepository.findById(postId);
 
-        if(!optionalPost.isPresent()) throw new IllegalArgumentException("해당 게시글이 존재하지 않습니다.");
-        if(!optionalComment.isPresent()) throw new IllegalArgumentException("해당 댓글이 존재하지 않습니다.");
+        if (!optionalPost.isPresent()) throw new IllegalArgumentException("해당 게시글이 존재하지 않습니다.");
+        if (!optionalComment.isPresent()) throw new IllegalArgumentException("해당 댓글이 존재하지 않습니다.");
 
         reply.setContent(replyContent);
         reply.setNickname(nickname);
@@ -92,10 +98,33 @@ public class CommentService {
         reply.setPost(optionalPost.get());
         reply.setParentComment(optionalComment.get());
 
-        Post post=optionalPost.get();
+        Post post = optionalPost.get();
         post.setEachComments(post.getEachComments() + 1);
         postRepository.save(post);
         commentRepository.save(reply);
+    }
+
+    // 답글 삭제
+    @Transactional
+    public ResponseEntity<String> deleteReply(Long replyId) {
+        Optional<Comment> optionalReply = commentRepository.findById(replyId);
+
+        if (optionalReply.isPresent()) {
+            // 해당 게시글 및 부모 댓글에서 해당 답글 삭제, 게시글 전체 댓글 수 1 감소
+            Post post = optionalReply.get().getPost();
+            Comment parentComment = optionalReply.get().getParentComment();
+
+            post.setEachComments(post.getEachComments() - 1);
+            post.getComments().remove(optionalReply.get());
+            parentComment.getReplies().remove(optionalReply.get());
+
+            postRepository.save(post);
+            commentRepository.delete(optionalReply.get());
+
+            return ResponseEntity.ok("성공적으로 삭제되었습니다.");
+        }
+
+        return new ResponseEntity<>("해당 답글이 존재하지 않습니다.", HttpStatus.NOT_FOUND);
     }
 
     // 댓글 및 답글 존재 및 닉네임 일치 체크

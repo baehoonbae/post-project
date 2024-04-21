@@ -60,7 +60,19 @@ public class CommentController {
     }
 
     // 답글 삭제
-    //@PostMapping(value = "/post/{id}/comment/{commentId}/reply/{replyId}")
+    @PostMapping(value = "/post/{id}/comment/{commentId}/reply/{replyId}")
+    public String deleteReply(@PathVariable Long id,
+                              @PathVariable Long commentId,
+                              @PathVariable Long replyId,
+                              HttpSession session) {
+        // 로그인 되어 있는지, 답글 작성자인지 체크
+        String nickname = (String) session.getAttribute("nickname");
+        if (nickname == null || !commentService.checkNickname(replyId, nickname)) {
+            throw new IllegalStateException("권한이 없습니다.");
+        }
 
+        commentService.deleteReply(replyId);
+        return "redirect:/post/{id}";
+    }
 
 }

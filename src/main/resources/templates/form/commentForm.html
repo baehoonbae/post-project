@@ -13,8 +13,8 @@
                               th:text="' (' + ${comment.updateDate} + ')'"></span>
                     </div>
                     <div class="right-buttons">
-                        <button th:id="'replyButton-' + ${comment.id}" class="comment-button reply">답글</button>
-                        <button th:id="'deleteButton-' + ${comment.id}" class="comment-button delete"
+                        <button th:id="'replyButton-' + ${comment.id}" class="comment-reply">답글</button>
+                        <button th:id="'deleteButton-' + ${comment.id}" class="comment-delete"
                                 th:if="${comment.nickname == session.nickname}"
                                 onclick="return confirm('정말 삭제하시겠습니까?');">삭제
                         </button>

@@ -42,8 +42,13 @@
                               th:text="' (' + ${reply.updateDate} + ')'"></span>
                     </div>
                     <div class="right-buttons">
-                        <button th:id="'deleteButton-' + ${reply.id}" class="reply-button delete"
-                                th:if="${reply.nickname == session.nickname}">삭제
+                        <button th:id="'deleteButton-' + ${reply.id}" class="reply-delete"
+                                th:data-comment-id="${comment.id}"
+                                th:data-reply-id="${reply.id}"
+                                th:if="${reply.nickname == session.nickname}"
+                                th:action="@{/post/{id}/reply/{replyId}(id=${post.id}, replyId=${reply.id})}"
+                                th:method="post"
+                                onclick="return confirm('정말 삭제하시겠습니까?');">삭제
                         </button>
                     </div>
                 </div>

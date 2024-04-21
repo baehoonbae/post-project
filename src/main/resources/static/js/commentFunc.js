@@ -1,11 +1,29 @@
     // 댓글 삭제
-    $(document).on('click', '.delete', function(event) {
+    $(document).on('click', '.comment-delete', function(event) {
         var commentId = $(this).attr('id').split('-')[1];
         $.ajax({
             url: '/post/' + postId + '/comment/' + commentId,
             type: 'POST',
             success: function(response) {
                 alert('댓글이 성공적으로 삭제되었습니다.');
+                location.reload();
+            },
+            error: function(xhr, status, error) {
+                alert('서버 오류가 발생했습니다.');
+            }
+        });
+        event.preventDefault();
+    });
+
+    // 답글 삭제
+    $(document).on('click', '.reply-delete', function(event) {
+        var commentId = $(this).data('comment-id');
+        var replyId = $(this).data('reply-id')
+        $.ajax({
+            url: '/post/' + postId + '/comment/' + commentId + '/reply/' + replyId,
+            type: 'POST',
+            success: function(response) {
+                alert('답글이 성공적으로 삭제되었습니다.');
                 location.reload();
             },
             error: function(xhr, status, error) {
@@ -29,7 +47,7 @@
         });
     });
 
-    $(document).on('click', '.reply', function(event) {
+    $(document).on('click', '.comment-reply', function(event) {
         var commentId = $(this).attr('id').split('-')[1];
         var replyForm = $('#replyForm-' + commentId);
         replyForm.toggle();
