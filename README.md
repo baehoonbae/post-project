@@ -1,30 +1,99 @@
-# Read Me First
-The following was discovered as part of building this project:
+# 웹 게시판 프로젝트
 
-* The original package name 'com.example.post-project' is invalid and this project uses 'com.example.postproject' instead.
+`Spring Boot`를 사용하여 게시판을 구현하는 기본적인 웹 프로젝트입니다.
 
-# Getting Started
+// 여기 게시판 사진 넣기
 
-### Reference Documentation
-For further reference, please consider the following sections:
+## 목차
 
-* [Official Gradle documentation](https://docs.gradle.org)
-* [Spring Boot Gradle Plugin Reference Guide](https://docs.spring.io/spring-boot/docs/3.2.2/gradle-plugin/reference/html/)
-* [Create an OCI image](https://docs.spring.io/spring-boot/docs/3.2.2/gradle-plugin/reference/html/#build-image)
-* [Thymeleaf](https://docs.spring.io/spring-boot/docs/3.2.2/reference/htmlsingle/index.html#web.servlet.spring-mvc.template-engines)
-* [Spring Web](https://docs.spring.io/spring-boot/docs/3.2.2/reference/htmlsingle/index.html#web)
-* [Spring Boot DevTools](https://docs.spring.io/spring-boot/docs/3.2.2/reference/htmlsingle/index.html#using.devtools)
+- [프로젝트 개요](#프로젝트-개요)
+  - [프로젝트 소개](#프로젝트-소개)
+  - [기능](#기능)
+  - [개발 환경](#개발-환경)
+  
 
-### Guides
-The following guides illustrate how to use some features concretely:
+- [프로젝트 구조](#프로젝트-구조)
+  - [패키지 구조](#패키지-구조)
+  - [DB 구조](#DB)
+  - [API 설계](#API)
+  
 
-* [Handling Form Submission](https://spring.io/guides/gs/handling-form-submission/)
-* [Building a RESTful Web Service](https://spring.io/guides/gs/rest-service/)
-* [Serving Web Content with Spring MVC](https://spring.io/guides/gs/serving-web-content/)
-* [Building REST services with Spring](https://spring.io/guides/tutorials/rest/)
+- [개발 및 업데이트 내역](#개발-및-업데이트-내역)
 
-### Additional Links
-These additional references should also help you:
 
-* [Gradle Build Scans – insights for your project's build](https://scans.gradle.com#gradle)
+- [맺음말](#맺음말)
 
+  - [보완 사항](#보완-사항)
+  - [후기](#후기)
+
+## 프로젝트 개요
+
+### 1. 프로젝트 소개
+
+- **프로젝트 명** : 웹 게시판 프로젝트
+- **프로젝트 기간** : 2024.02 ~ 2024.04.
+- **프로젝트 목적** : Java와 Spring Boot를 사용하여 게시판을 구현해보고 웹 프로그래밍의 기초를 익히는 것을 목표로 했습니다.
+
+### 2. 기능
+- **게시판**
+  - CRUD 기능
+  - 페이징 및 검색
+  - 조회수
+- **사용자**
+  - 회원 가입
+  - 유효성 검사
+  - 로그인
+  - 로그아웃
+- **댓글**
+  - 댓글 작성, 삭제
+  - 대댓글 작성, 삭제
+
+### 3. 개발 환경
+
+- **IDE**
+  - IntelliJ IDEA
+ 
+
+- **Build Tool**
+  - Gradle
+
+
+- **Template Engine**
+  - Thymeleaf
+
+
+- **Backend**
+  - Java
+  - Spring Boot
+  - JPA
+  - Hibernate
+  - MySQL
+
+
+- **Frontend**
+  - HTML
+  - CSS
+  - JavaScript
+  - Bootstrap 5.0.2
+  - jQuery
+  - Ajax
+
+
+- **Version Control**
+  - Git
+  - GitHub
+
+## 프로젝트 구조
+### 1. 패키지 구조
+### 2. DB 구조
+### 3. API 설계
+
+
+## 개발 및 업데이트 내역
+
+- 
+
+
+## 맺음말
+### 1. 보완 사항
+### 2. 후기
