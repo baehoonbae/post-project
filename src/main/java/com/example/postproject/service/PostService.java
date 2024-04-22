@@ -6,6 +6,9 @@ import com.example.postproject.repository.MemberRepository;
 import com.example.postproject.repository.PostRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -25,6 +28,11 @@ public class PostService {
     public PostService(PostRepository postRepository, MemberRepository memberRepository) {
         this.postRepository = postRepository;
         this.memberRepository = memberRepository;
+    }
+
+    // 페이징 처리된 게시글 목록 조회
+    public Page<Post> getPosts(Pageable pageable) {
+        return postRepository.findAll(pageable);
     }
 
     // 글 작성
@@ -61,11 +69,6 @@ public class PostService {
             if (!title.isEmpty()) {
                 post.setTitle(title);
             }
-
-            // 수정 날짜 설정
-//            LocalDateTime now = LocalDateTime.now();
-//            String formattedDate = now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-//            post.setUpdateDate(formattedDate);
 
             postRepository.save(post);
         } else {
@@ -104,13 +107,8 @@ public class PostService {
         }
     }
 
-    // 비밀번호 확인 로직
-//    public boolean isPasswordCorrect(Long id, String enteredPassword) {
-//        Optional<Post> optionalPost = postRepository.findById(id);
-//        if (optionalPost.isPresent()) {
-//            Post post = optionalPost.get();
-//            return post.getPassword().equals(enteredPassword);
-//        }
-//        return false;
-//    }
+    public Page<Post> searchPosts(String keyword, PageRequest pageable) {
+        return postRepository.findByTitleContainingOrContentContaining(keyword, keyword, pageable);
+    }
+
 }

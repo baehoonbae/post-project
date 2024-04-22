@@ -12,7 +12,9 @@
 <div th:replace="~{form/headerButtons :: header}"></div>
 <div>
     <br/>
-    <nav>훈 배</nav>
+    <nav style="border-bottom: 2.5px solid teal;">
+        <div class="nav-left">게 시 판</div>
+    </nav>
     <div>
         <div align="center">
             <form id="contentForm" th:action="@{/post/{id}(id=${post.id})}" th:method="get">

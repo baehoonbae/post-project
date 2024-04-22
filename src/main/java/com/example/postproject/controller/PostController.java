@@ -4,6 +4,9 @@ import com.example.postproject.domain.Post;
 import com.example.postproject.service.PostService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -21,8 +24,10 @@ public class PostController {
 
     // 홈페이지
     @GetMapping(value = {"", "/"})
-    public String home(Model model) {
-        model.addAttribute("posts", postService.getAllPosts());
+    public String home(@RequestParam(value="page", defaultValue = "0") int page, Model model) {
+        PageRequest pageable = PageRequest.of(page, 15, Sort.by("id").descending());
+        Page<Post> postPage = postService.getPosts(pageable);
+        model.addAttribute("posts", postPage);
         return "home";
     }
 
@@ -83,15 +88,13 @@ public class PostController {
         return postService.deletePost(id);
     }
 
-
-    // 비밀번호 확인
-//     @PostMapping(value = "/post/{id}/validate-password")
-//     public ResponseEntity<String> validatePasswordAndRedirectToEditPage(@PathVariable long id, String password, RedirectAttributes redirectAttributes) {
-//        if (postService.isPasswordCorrect(id, password)) {
-//            redirectAttributes.addAttribute("id", id);
-//            return ResponseEntity.ok().body("redirect:/post/{id}/edit");
-//        } else {
-//            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("redirect:/post/{id}"); // 비밀번호가 틀렸을 때 리다이렉트할 경로 지정
-//        }
-//    }
+    // 게시글 검색
+    @GetMapping(value = "/search")
+    public String search(@RequestParam(value = "query") String query, @RequestParam(value="page", defaultValue = "0") int page, Model model) {
+        PageRequest pageable = PageRequest.of(page, 15, Sort.by("id").descending());
+        Page<Post> postPage = postService.searchPosts(query, pageable);
+        model.addAttribute("posts", postPage);
+        model.addAttribute("query", query);
+        return "home";
+    }
 }
