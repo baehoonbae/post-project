@@ -4,7 +4,7 @@
 <div class="page">
     <a th:if="${posts.hasPrevious()}" th:href="@{/search (page=${posts.number - 1}, query=${query})}">이전</a>
     <span th:each="i : ${#numbers.sequence(1, posts.totalPages)}">
-        <a th:href="@{/search (query=${query}, page=${i-1})}" th:text="${i}"></a>
+        <a th:href="@{/search (query=${query}, page=${i-1})}" th:text="${i}" th:attr="style=${i-1 == posts.number ? 'text-decoration: underline;' : ''}"></a>
     </span>
     <a th:if="${posts.hasNext()}" th:href="@{/search (page=${posts.number + 1}, query=${query})}">다음</a>
 </div>
