@@ -110,5 +110,4 @@ public class PostService {
     public Page<Post> searchPosts(String keyword, PageRequest pageable) {
         return postRepository.findByTitleContainingOrContentContaining(keyword, keyword, pageable);
     }
-
 }

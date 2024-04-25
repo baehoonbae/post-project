@@ -15,7 +15,8 @@ public class UrlSessionAspect {
 
     // Member와 관련된 모든 엔드 포인트 제외
     @Around("execution(* com.example.postproject.controller..*(..)) " +
-            "&& !execution(* com.example.postproject.controller.MemberController.*(..)) "
+            "&& !execution(* com.example.postproject.controller.MemberController.*(..)) " +
+            "&& !execution(* com.example.postproject.controller.PostController.search(..)) "
     )
     public Object around(ProceedingJoinPoint joinPoint) throws Throwable {
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
@@ -23,7 +24,7 @@ public class UrlSessionAspect {
 
         String prevUrl = (String) session.getAttribute("prevUrl");
         String currentUrl = request.getRequestURL().toString();
-        if (currentUrl.contains("/member")) {
+        if (currentUrl.contains("/member") || currentUrl.contains("/search")) {
             session.setAttribute("prevUrl", prevUrl);
         } else {
             session.setAttribute("prevUrl", currentUrl);

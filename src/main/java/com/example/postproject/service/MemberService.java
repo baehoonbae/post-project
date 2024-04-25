@@ -57,4 +57,5 @@ public class MemberService {
         Member member = memberRepository.findByUsername(username);
         return member.getNickname();
     }
+
 }

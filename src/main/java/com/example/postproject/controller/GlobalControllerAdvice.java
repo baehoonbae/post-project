@@ -12,5 +12,4 @@ public class GlobalControllerAdvice {
         Boolean isLoggedIn = (Boolean) request.getSession().getAttribute("isLoggedIn");
         return isLoggedIn != null && isLoggedIn;
     }
-
 }

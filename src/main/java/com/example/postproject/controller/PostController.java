@@ -97,4 +97,5 @@ public class PostController {
         model.addAttribute("query", query);
         return "home";
     }
+
 }

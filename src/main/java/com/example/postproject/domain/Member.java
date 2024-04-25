@@ -29,5 +29,4 @@ public class Member {
 
     @OneToMany(mappedBy = "nickname", fetch = FetchType.EAGER)
     private List<Post> postList;
-
 }
