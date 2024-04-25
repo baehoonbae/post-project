@@ -2,6 +2,8 @@
 
 `Spring Boot`를 사용하여 커뮤니티 게시판을 구현하는 기본적인 웹 프로젝트입니다.
 
+<br/>
+
 # 📚 목차
 
 - [프로젝트 소개](#프로젝트-소개)
@@ -14,12 +16,18 @@
 - [보완 사항](#보완-사항)
 - [후기](#후기)
 
+<br/>
+<br/>
+
 # 1️⃣ 프로젝트 소개
 
 - **프로젝트 명** : 커뮤니티 게시판 프로젝트
 - **프로젝트 기간** : `2024.02. ~ 2024.04.`
 - **프로젝트 목적** : `Java`와 `Spring Boot`를 사용하여 게시판을 구현해보고 웹 프로그래밍의 기초를 익히는 것을 목표로
   했습니다.
+
+<br/>
+<br/>
 
 # 2️⃣ 프로젝트 구조
 
@@ -31,13 +39,18 @@
 
 ![img_1.png](src/main/resources/static/images/img_1.png)
 
+<br/>
+<br/>
+
 # 3️⃣ 개발 환경
 
 - <img src="https://img.shields.io/badge/Framework-%23121011?style=for-the-badge"><img src="https://img.shields.io/badge/springboot-6DB33F?style=for-the-badge&logo=springboot&logoColor=white"><img src="https://img.shields.io/badge/3.2.2-515151?style=for-the-badge">
 - <img src="https://img.shields.io/badge/Build-%23121011?style=for-the-badge"><img src="https://img.shields.io/badge/Gradle-02303A?style=for-the-badge&logo=Gradle&logoColor=white"><img src="https://img.shields.io/badge/8.5-515151?style=for-the-badge">
 - <img src="https://img.shields.io/badge/Language-%23121011?style=for-the-badge"><img src="https://img.shields.io/badge/java-%23ED8B00?style=for-the-badge&logo=openjdk&logoColor=white"><img src="https://img.shields.io/badge/17-515151?style=for-the-badge">
 - <img src="https://img.shields.io/badge/Project Encoding-%23121011?style=for-the-badge"><img src="https://img.shields.io/badge/UTF 8-EA2328?style=for-the-badge">
-  v
+
+<br/>
+<br/>
 
 # 4️⃣ 기술 스택
 
@@ -54,6 +67,7 @@
 <img src="https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white"> <img src="https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white"> <img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black">
 <br/>
 <img src="https://img.shields.io/badge/Bootstrap-563D7C?style=for-the-badge&logo=bootstrap&logoColor=white"> <img src="https://img.shields.io/badge/jQuery-0769AD?style=for-the-badge&logo=jquery&logoColor=white"> <img src="https://img.shields.io/badge/Thymeleaf-005F0F?style=for-the-badge&logo=thymeleaf&logoColor=white">
+<br/>
 <br/>
 <br/>
 
@@ -231,16 +245,25 @@
 <hr/>
 </details>
 
+<br/>
+<br/>
+
 # 6️⃣ API 명세서
 
 
+<br/>
+<br/>
 
 # 7️⃣ DB 구조
 
 
+<br/>
+<br/>
 
 # 8️⃣ 보완 사항
 
 
+<br/>
+<br/>
 
 # 9️⃣ 후기
