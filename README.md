@@ -1,6 +1,6 @@
 # 🥕 웹 게시판 프로젝트
 
-`Spring Boot`를 사용하여 커뮤니티 게시판을 구현하는 기본적인 웹 프로젝트입니다.
+- `Spring Boot`를 사용하여 커뮤니티 게시판을 구현하는 기본적인 웹 프로젝트입니다.
 
 <br/>
 
@@ -11,7 +11,7 @@
 - [기능](#기능)
 - [개발 환경](#개발-환경)
 - [기술 스택](#기술-스택)
-- [API 명세서](#API-명세서)
+- [API 설계](#API-설계)
 - [DB 구조](#DB-구조)
 - [보완 사항](#보완-사항)
 - [후기](#후기)
@@ -22,20 +22,27 @@
 # 1️⃣ 프로젝트 소개
 
 - **프로젝트 명** : 커뮤니티 게시판 프로젝트
+
+
 - **프로젝트 기간** : `2024.02. ~ 2024.04.`
-- **프로젝트 목적** : `Java`와 `Spring Boot`를 사용하여 게시판을 구현해보고 웹 프로그래밍의 기초를 익히는 것을 목표로
-  했습니다.
+
+
+- **프로젝트 목적**
+  - `Java`와 `Spring Boot`를 사용하여 게시판을 구현해보고 웹 프로그래밍의 기초를 익히는 것을 목표로
+    했습니다.
+  - MVC 패턴을 이해하고, 데이터베이스와의 연동을 통해 데이터를 저장하고 조회하는 방법을 익히는 것을 목표로
+    했습니다.
 
 <br/>
 <br/>
 
-# 2️⃣ 프로젝트 구조
+# 2️⃣ 프로젝트 구조 
 
-## 📌Backend
+## `📌Backend`
 
 ![img.png](src/main/resources/static/images/img.png)
 
-## 📌Frontend
+## `📌Frontend`
 
 ![img_1.png](src/main/resources/static/images/img_1.png)
 
@@ -248,22 +255,96 @@
 <br/>
 <br/>
 
-# 6️⃣ API 명세서
+# 6️⃣ API 설계
 
+## `📌 게시글`
+![img_1.png](img_1.png)
+
+## `📌 사용자`
+![img_2.png](img_2.png)
+
+## `📌 댓글`
+![img_3.png](img_3.png)
 
 <br/>
 <br/>
 
 # 7️⃣ DB 구조
 
+![img_4.png](img_4.png)
 
 <br/>
 <br/>
 
-# 8️⃣ 보완 사항
+# 8️⃣ 트러블슈팅
+
+- **문제점** : 로그인 인증 완료 시에 모든 뷰에 로그인 상태 적용
+
+
+- **문제점** : 로그인/로그아웃 시 이전 페이지로 돌아가기
+- **해결 방법**
+  - AOP를 사용하여 로그인/로그아웃 시 이전 페이지로 돌아가는 기능을 구현하였습니다.
+
+```java
+@Aspect
+@Component
+public class LoginAspect {
+
+    private final HttpServletRequest request;
+
+    public LoginAspect(HttpServletRequest request) {
+        this.request = request;
+    }
+
+    @Around("execution(* com.example.board.controller.*.*(..))")
+    public Object sessionCheck(ProceedingJoinPoint joinPoint) throws Throwable {
+        HttpSession session = request.getSession();
+        String requestURI = request.getRequestURI();
+
+        if (session.getAttribute("loginUser") == null) {
+            if (requestURI.equals("/board/write") || requestURI.equals("/board/update")) {
+                return "redirect:/login";
+            }
+        }
+
+        return joinPoint.proceed();
+    }
+}
+```
+
+
+- **문제점** : 게시글 작성 시에 작성자의 아이디를 저장하지 않음
+- **해결 방법** : 게시글 작성 시에 작성자의 아이디를 저장하도록 수정하였습니다.
+
+```java
+@PostMapping("/write")
+public String write(@ModelAttribute Board board, HttpSession session) {
+    User user = (User) session.getAttribute("loginUser");
+    board.setUserId(user.getId());
+    boardService.write(board);
+    return "redirect:/board";
+}
+```
+
 
 
 <br/>
 <br/>
 
 # 9️⃣ 후기
+
+- 이번 프로젝트를 통해 Spring Boot 를 사용하여 게시판을 구현하는 방법을 익힐 수 있었습니다.
+- MVC 패턴이란 무엇인지, 그리고 데이터베이스의 구조나 API 설계를 어떻게 해야 효율적으로 개발할 수 있을까에 대한 고민을 많이 해볼 수 있었습니다.
+- 또한 HTTP 의 session 이라거나, ajax 통신 등 HTTP 통신에 대한 이해도 높아졌습니다.
+
+
+- 그러나 과연 제가 작성한 코드 한줄 한줄에 대해서 누군가에게 정확하게 설명할 수 있을지는 의문입니다.
+- 예를 들어 로그인/로그아웃 시에 이전 페이지로 돌아갈 때 AOP를 적용하였는데, 이 기능의 작동원리를 설명하기에는 부족함이 많습니다.
+
+
+- 이처럼 독학하며 진행한 프로젝트였기 때문에 많은 어려움이 있었지만, 그만큼 성취감도 컸습니다.
+- 앞으로의 프로젝트에서는 내가 어떤 부분이 부족한지에 대해 더 자세히 고민하고, 어떻게 보완하며, 더 효율적인 코드를 작성할 수 있는지에 대해서 고민하고 싶습니다.
+- 따라서 앞으로도 다양한 프로젝트를 진행하며, 백엔드 개발 실력을 향상시키고 싶습니다.
+
+
+- 감사합니다.
